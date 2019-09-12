@@ -42,6 +42,7 @@
   --orange-dark:#ee8d00;
 }
 
+
 body {
   direction:rtl;
   overflow-x: hidden;
@@ -60,6 +61,11 @@ html, body{
   font-family: 'Cabin', sans-serif;
   margin:0;
   padding: 0;
+}
+
+a {
+  color: white;
+  text-decoration: none;
 }
 p{
   margin:0;

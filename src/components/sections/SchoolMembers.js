@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-import manager from '../assets/images/manager.svg';
+import manager from '../../assets/images/manager.svg';
 
-class Members extends Component {
+class SchoolMembers extends Component {
 
 
 
     render() {
+
+        //TODO: don't show members in mobile homepage
+
         return (
             <>
 
@@ -58,4 +62,4 @@ class Members extends Component {
     }
 }
 
-export default Members;
+export default SchoolMembers;

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-import pic from '../assets/images/2.jpg';
-import microphone from '../assets/images/microphone.svg';
-import calendar from '../assets/images/calendar.svg';
-import {consts} from "../config/config";
+import pic from '../../assets/images/2.jpg';
+import microphone from '../../assets/images/microphone.svg';
+import calendar from '../../assets/images/calendar.svg';
+import {consts} from "../../config/config";
 
-import {handleModal} from '../store/actions/mainActions';
+import {handleModal} from '../../store/actions/mainActions';
 
 class Content extends Component {
 
@@ -38,7 +39,7 @@ class Content extends Component {
     }
 
     handleProgramFilter() {
-
+        this.props.showModal(consts.PROGRAM_FILTER_MODAL);
     }
 
     render() {
@@ -86,9 +87,7 @@ class Content extends Component {
 
                     </div>
 
-
                 </>
-
 
         } else if (this.state.cTab === consts.PROGRAMS_TAB) {
 
@@ -120,7 +119,6 @@ class Content extends Component {
                             {this.state.grade}
                             <div className='arrow-down m-t-5 m-r-5'/>
                         </div>
-
                     </div>
 
                     <div className='filter dis-flex'>
@@ -166,7 +164,6 @@ class Content extends Component {
 
 
                 </>;
-
         }
 
 
@@ -210,4 +207,16 @@ class Content extends Component {
     }
 }
 
-export default Content;
+const mapStateToProps = state => ({
+    posts:  state.data.posts,
+    postField: state.data.postField,
+    postGrade: state.data.postGrade,
+
+    grades: state.data.grades,
+    fields: state.data.fields,
+
+    programs: state.data.programs,
+    media: state.data.media,
+});
+
+export default connect(mapStateToProps, {handleModal})(Content);

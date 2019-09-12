@@ -15,12 +15,10 @@ if (isDevelopment)
         rootReducer,
         initialState,
         compose(
-            applyMiddleware(...middleWare), // cause middleWare is an array
-            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // enabling redux chrome exetnsion
+            applyMiddleware(...middleWare),
+            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
         ));
-
 else
-    // dont want to use chrome redux DevTools extension
     store = createStore(rootReducer,
         initialState,
         applyMiddleware(...middleWare));

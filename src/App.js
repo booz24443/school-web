@@ -1,37 +1,25 @@
 import React, {Component} from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
 import store from './store/store';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Slider from "./components/Slider";
-import Content from "./components/Content";
-import Members from "./components/Members";
+import SiteTemplate from "./components/SiteTemplate";
 
 class App extends Component {
 
-
     render() {
         return (
-
             <Provider store={store}>
+                <BrowserRouter>
 
-                <div className='main-con'>
+                    <Switch>
 
-                    <Header/>
+                        <Route path="/" component={SiteTemplate}/>
 
-                    <Slider/>
+                    </Switch>
 
-
-                    <Content/>
-
-                    <Members/>
-
-                    <Footer/>
-
-                </div>
-
+                </BrowserRouter>
             </Provider>
         );
     }
