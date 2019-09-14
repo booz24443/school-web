@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 
 import pic from '../../assets/images/2.jpg';
 import microphone from '../../assets/images/microphone.svg';
 import calendar from '../../assets/images/calendar.svg';
 import {consts} from "../../config/config";
 
-import {handleModal} from '../../store/actions/mainActions';
+import {handleModal, handleTab} from '../../store/actions/mainActions';
 
 class Content extends Component {
 
@@ -14,7 +15,6 @@ class Content extends Component {
         super();
 
         this.state = {
-            cTab: consts.POSTS_TAB,
             grade: 'همه رشته ها',
             field: 'همه پایه ها'
         };
@@ -27,14 +27,13 @@ class Content extends Component {
     handleTab(e) {
 
         if (this.postTab.contains(e.target)) {
-            this.setState({cTab: consts.POSTS_TAB});
+            this.props.handleTab(consts.POSTS_TAB);
 
         } else if (this.programTab.contains(e.target)) {
-            this.setState({cTab: consts.PROGRAMS_TAB});
+            this.props.handleTab(consts.PROGRAMS_TAB);
 
         } else if (this.mediaTab.contains(e.target)) {
-            this.setState({cTab: consts.MEDIAS_TAB});
-
+            this.props.handleTab(consts.MEDIAS_TAB);
         }
     }
 
@@ -47,7 +46,7 @@ class Content extends Component {
         let filter;
         let items;
 
-        if (this.state.cTab === consts.POSTS_TAB) {
+        if (this.props.currentTab === consts.POSTS_TAB) {
             items =
                 <>
 
@@ -89,7 +88,7 @@ class Content extends Component {
 
                 </>
 
-        } else if (this.state.cTab === consts.PROGRAMS_TAB) {
+        } else if (this.props.currentTab  === consts.PROGRAMS_TAB) {
 
             items =
                 <>
@@ -117,7 +116,7 @@ class Content extends Component {
                         <div className='type'>پایه : </div>
                         <div className='selected' onClick={this.handleProgramFilter}>
                             {this.state.grade}
-                            <div className='arrow-down m-t-5 m-r-5'/>
+                            <div className='arrow-down '/>
                         </div>
                     </div>
 
@@ -125,13 +124,13 @@ class Content extends Component {
                         <div className='type'>رشته : </div>
                         <div className='selected' onClick={this.handleProgramFilter}>
                             {this.state.field}
-                            <div className='arrow-down m-t-5 m-r-5'/>
+                            <div className='arrow-down'/>
                         </div>
                     </div>
 
                 </div>
 
-        } else if (this.state.cTab === consts.MEDIAS_TAB) {
+        } else if (this.props.currentTab  === consts.MEDIAS_TAB) {
 
             items =
                 <>
@@ -162,52 +161,58 @@ class Content extends Component {
 
                     </div>
 
-
                 </>;
         }
 
 
         return (
-            <div className='content-container'>
+            <Element className='content-container'  name="content">
 
-                <svg width="500" height="500" className='svg-con'>
-                    <rect x="0" y="0" rx="30" ry="30" width="500" height="500" className='svg-inner' />
-                </svg>
+                {/*<svg width="500" height="500" className='svg-con'>*/}
+                    {/*<rect x="0" y="0" rx="30" ry="30" width="500" height="500" className='svg-inner' />*/}
+                {/*</svg>*/}
 
-                <svg width="500" height="500" className='svg-con1'>
-                    <rect x="0" y="0" rx="30" ry="30" width="500" height="500" className='svg-inner1' />
-                </svg>
+                {/*<svg width="500" height="500" className='svg-con1'>*/}
+                    {/*<rect x="0" y="0" rx="30" ry="30" width="500" height="500" className='svg-inner1' />*/}
+                {/*</svg>*/}
+
+                <div className='shape red'/>
+                <div className='shape gray'/>
+
 
                 <div className='categories'>
 
-                    <div className={(this.state.cTab === consts.POSTS_TAB)? 'category-item selected': 'category-item'}
+                    <div className={(this.props.currentTab === consts.POSTS_TAB)? 'category-item selected': 'category-item'}
                          ref={node =>  this.postTab=node} onClick={this.handleTab}>اطلاعیه ها</div>
 
-                    <div className={(this.state.cTab === consts.PROGRAMS_TAB)? 'category-item selected': 'category-item'}
+                    <div className={(this.props.currentTab === consts.PROGRAMS_TAB)? 'category-item selected': 'category-item'}
                          ref={node =>  this.programTab=node} onClick={this.handleTab}>برنامه ها</div>
 
-                    <div className={(this.state.cTab === consts.MEDIAS_TAB)? 'category-item selected': 'category-item'}
+                    <div className={(this.props.currentTab === consts.MEDIAS_TAB)? 'category-item selected': 'category-item'}
                          ref={node =>  this.mediaTab=node} onClick={this.handleTab}>رسانه ها</div>
 
                 </div>
 
+
+
+                <div className='break-line-head'/>
+
                 {filter}
 
-
                 <div className='list-container'>
-
                     {items}
-
                 </div>
 
-                <div className='break-line'/>
+                <div className='break-line p-t-30 p-b-30'/>
 
-            </div>
+            </Element>
         );
     }
 }
 
 const mapStateToProps = state => ({
+    currentTab: state.data.currentTab,
+
     posts:  state.data.posts,
     postField: state.data.postField,
     postGrade: state.data.postGrade,
@@ -219,4 +224,4 @@ const mapStateToProps = state => ({
     media: state.data.media,
 });
 
-export default connect(mapStateToProps, {handleModal})(Content);
+export default connect(mapStateToProps, {handleModal, handleTab})(Content);

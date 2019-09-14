@@ -6,30 +6,63 @@ import Slider from './sections/Slider';
 import Header from './sections/Header';
 import Footer from './sections/Footer';
 import Members from "./pages/Members";
+import connect from "react-redux/es/connect/connect";
+import {handleSize} from "../store/actions/mainActions";
 
 class SiteTemplate extends Component {
 
+
+    constructor(props) {
+        super(props);
+
+        // this.state = {
+        //     ready: false
+        // };
+
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+
+        window.scrollTo(0, 0);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+        this.props.handleSize(window.innerWidth, window.innerHeight);
+    }
+
     render() {
         return (
-        <div className='main-con'>
+            <div className='main-con'>
 
-            <Header/>
+                <Header/>
 
-            <Slider/>
+                <Slider/>
 
-            <Switch>
+                <Switch>
 
-                <Route path="/" component={Home} exact/>
-                <Route path="/members" component={Members} exact/>
-                <Route path="/about" component={About} exact/>
+                    <Route path="/" component={Home} exact/>
+                    <Route path="/members" component={Members} exact/>
+                    <Route path="/about" component={About} exact/>
 
-            </Switch>
+                </Switch>
 
-            <Footer/>
+                <Footer/>
 
-        </div>
+            </div>
         );
     }
 }
 
-export default SiteTemplate;
+const mapStateToProps = state => ({
+    width: state.data.width,
+    height: state.data.height,
+});
+
+export default connect(mapStateToProps, {handleSize})(SiteTemplate);

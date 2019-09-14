@@ -5,6 +5,9 @@ import {log, consts} from '../../config/config';
 // Posts state structure
 const initialState = {
     showModal: false,
+    height: 0,
+    width: 0,
+    currentTab: consts.POSTS_TAB,
 
     posts: [],
     postField: '',
@@ -15,12 +18,26 @@ const initialState = {
 
     programs: [],
     media: [],
-
 };
 
 export default function (state = initialState, action) {
 
     switch (action.type) {
+
+        case types.HANDLE_SIZE:
+
+            return {
+                ...state,
+                width: action.width,
+                height: action.height,
+            };
+
+        case types.HANDLE_TAB:
+
+            return {
+                ...state,
+                currentTab: action.payload,
+            };
 
         case types.LOGGED:
 

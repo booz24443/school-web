@@ -23,7 +23,7 @@ export const consts = {
     POSTS_TAB: 'postTab',
 
 
-    PROGRAM_FILTER_MODAL: 'ORDM',
+    PROGRAM_FILTER_MODAL: 'PROGRAM_FILTER_MODAL',
 
 
     SUCCESS_CODE: 200,
