@@ -75,7 +75,6 @@ class Header extends Component {
                         </li>
 
                         <li>
-
                             <Link activeClass="active"
                                   to="content"
                                   spy={true}
@@ -89,7 +88,6 @@ class Header extends Component {
                                 رسانه ها
                                 </NavLink>
                             </Link>
-
                         </li>
 
 

@@ -2,11 +2,10 @@ import React, { Component }  from 'react'; // just to be able to use functions i
 
 export const isDevelopment = (process.env.NODE_ENV === 'development');
 
-// export const baseAddress = isDevelopment ? 'http://127.0.0.1:4050/api/' : 'http://admin.overrider.ir/api/';
+
 export const baseAddress = '/api/';
 export const imagesAddress = '/images/';
 
-// export const publicKey = 'BF4D-KmyDcU7oHjSfw3RnphdyQ50MjIuI3ZdRUNasrFQkthZqgwr7I-Z3OuRS2VgyP2Oumx-1PnK_3dsXWDgA9k';
 
 export const URLS = {
     ROUTE_AUTHENTICATE: baseAddress + 'admin' + '/authenticate',
@@ -17,7 +16,6 @@ export const URLS = {
 };
 
 export const consts = {
-
     MEDIAS_TAB: 'mediaTab',
     PROGRAMS_TAB: 'programsTab',
     POSTS_TAB: 'postTab',
@@ -25,13 +23,6 @@ export const consts = {
 
     PROGRAM_FILTER_MODAL: 'PROGRAM_FILTER_MODAL',
 
-
-    SUCCESS_CODE: 200,
-    NO_CONTENT_CODE: 205,
-    BAD_REQ_CODE: 400,
-    UNAUTHORIZED_CODE: 401,
-    NOT_FOUND_CODE: 404,
-    INT_ERR_CODE: 500
 };
 
 export const log = function(message) {
