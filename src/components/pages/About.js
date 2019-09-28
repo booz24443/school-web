@@ -5,7 +5,6 @@ class About extends Component {
         return (
             <div>
                 این درباره ی مدرسه است
-
             </div>
         );
     }

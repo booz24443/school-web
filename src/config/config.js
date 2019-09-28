@@ -3,16 +3,16 @@ import React, { Component }  from 'react'; // just to be able to use functions i
 export const isDevelopment = (process.env.NODE_ENV === 'development');
 
 
-export const baseAddress = '/api/';
+
+export const baseAddress = '/broadcast_app_server/public/api/';
 export const imagesAddress = '/images/';
 
 
 export const URLS = {
-    ROUTE_AUTHENTICATE: baseAddress + 'admin' + '/authenticate',
-    ROUTE_REGISTER_SERVICE_WORKER: baseAddress + 'admin' + '/register-sw',
-    ROUTE_CHECK_TOKEN: baseAddress + 'admin' + '/checkToken',
-    ROUTE_ACCEPT_ORDER_STATUS: baseAddress + 'admin' + '/get-accept-order',
 
+    ROUTE_POST_LIST: baseAddress + '1/posts/html/10/0/null/null/null',
+
+    ROUTE_BASE_GET_POSTS: baseAddress + '1/posts/' + 'html/10/0/null/null/null',
 };
 
 export const consts = {
@@ -23,6 +23,17 @@ export const consts = {
 
     PROGRAM_FILTER_MODAL: 'PROGRAM_FILTER_MODAL',
 
+    POST:'html',
+    MEDIA:'media',
+    PROGRAM:'program',
+
+    CHUNK_COUNT: 10,
+
+
+    RESULT_CODE:'result_code',
+
+    SUCCESS_CODE: 1000,
+
 };
 
 export const log = function(message) {
@@ -30,12 +41,25 @@ export const log = function(message) {
         console.log(message);
 };
 
+export async function getRequest(url, callback) {
+
+    let response = await fetch(url, {
+        method: 'GET',
+    });
+
+    let statusCode = response.status;
+
+    let data = await response.json().catch(err => {log(err)});
+
+    callback(data, statusCode);
+}
+
 export async function postRequest(url, params, callback) {
 
     let response = await fetch(url, {
         method: 'POST',
         body: JSON.stringify(params),
-        // body must be at least an empty object , otherwise we have remove headers config
+        // body must be at least an empty object , otherwise we have to remove headers config
 
         headers: {
             'Content-Type': 'application/json'

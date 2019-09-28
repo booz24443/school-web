@@ -5,9 +5,10 @@ import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, 
 import pic from '../../assets/images/2.jpg';
 import microphone from '../../assets/images/microphone.svg';
 import calendar from '../../assets/images/calendar.svg';
-import {consts} from "../../config/config";
+import {consts, getRequest, log, postRequest, URLS} from "../../config/config";
 
-import {handleModal, handleTab} from '../../store/actions/mainActions';
+import {handleModal, handleTab, handlePosts} from '../../store/actions/mainActions';
+import PageCounter from "../PageCounter";
 
 class Content extends Component {
 
@@ -19,21 +20,28 @@ class Content extends Component {
             field: 'همه پایه ها'
         };
 
-
         this.handleTab = this.handleTab.bind(this);
         this.handleProgramFilter = this.handleProgramFilter.bind(this);
+    }
+
+    componentDidMount() {
+
+        this.props.handlePosts(consts.POST, consts.CHUNK_COUNT, 0);
     }
 
     handleTab(e) {
 
         if (this.postTab.contains(e.target)) {
-            this.props.handleTab(consts.POSTS_TAB);
+            this.props.handleTab(consts.POSTS_TAB); // handle tab and fetchContent seprately
+            this.props.handlePosts(consts.POST, consts.CHUNK_COUNT, 0);
 
         } else if (this.programTab.contains(e.target)) {
             this.props.handleTab(consts.PROGRAMS_TAB);
+            this.props.handlePosts(consts.PROGRAM, consts.CHUNK_COUNT, 0);
 
         } else if (this.mediaTab.contains(e.target)) {
             this.props.handleTab(consts.MEDIAS_TAB);
+            this.props.handlePosts(consts.MEDIA, consts.CHUNK_COUNT, 0);
         }
     }
 
@@ -47,46 +55,16 @@ class Content extends Component {
         let items;
 
         if (this.props.currentTab === consts.POSTS_TAB) {
-            items =
-                <>
-
+            items = this.props.posts.map(post =>
                     <div className='item'>
 
                         <img className='thumbnail' src={pic} />
-                        <div className='title'>اطلاعیه کلاس اول ها</div>
-                        <div className='desc m-t-10'>این اطلاعیه که میگه فلان فلان هست و اینطوزیه</div>
-                        <div className='date'>1398-03-25</div>
+                        <div className='title'>{post.title}</div>
+                        <div className='desc m-t-10'>{post['preview_content']}</div>
+                        <div className='date'>{post['created_at']}</div>
 
                     </div>
-
-                    <div className='item'>
-
-                        <img className='thumbnail' src={pic} />
-                        <div className='title'>اطلاعیه کلاس اول ها</div>
-                        <div className='desc m-t-10'>این اطلاعیه که میگه فلان فلان هست و اینطوزیه</div>
-                        <div className='date'>1398-03-25</div>
-
-                    </div>
-
-                    <div className='item'>
-
-                        <img className='thumbnail' src={pic} />
-                        <div className='title'>اطلاعیه کلاس اول ها</div>
-                        <div className='desc m-t-10'>این اطلاعیه که میگه فلان فلان هست و اینطوزیه</div>
-                        <div className='date'>1398-03-25</div>
-
-                    </div>
-
-                    <div className='item'>
-
-                        <img className='thumbnail' src={pic} />
-                        <div className='title'>اطلاعیه کلاس اول ها</div>
-                        <div className='desc m-t-10'>این اطلاعیه که میگه فلان فلان هست و اینطوزیه</div>
-                        <div className='date'>1398-03-25</div>
-
-                    </div>
-
-                </>
+                )
 
         } else if (this.props.currentTab  === consts.PROGRAMS_TAB) {
 
@@ -148,18 +126,6 @@ class Content extends Component {
 
                     </div>
 
-                    <div className='item media dis-flex'>
-
-                        <img className='thumbnail-media' src={microphone} />
-
-                        <div className='media-detail'>
-                            <div className='title'>اطلاعیه کلاس اول ها</div>
-                            <div className='desc m-t-10'>این اطلاعیه که میگه فلان فلان هست و اینطوزیه</div>
-                            <div className='date'>1398-03-25</div>
-
-                        </div>
-
-                    </div>
 
                 </>;
         }
@@ -168,18 +134,12 @@ class Content extends Component {
         return (
             <Element className='content-container'  name="content">
 
-                {/*<svg width="500" height="500" className='svg-con'>*/}
-                    {/*<rect x="0" y="0" rx="30" ry="30" width="500" height="500" className='svg-inner' />*/}
-                {/*</svg>*/}
-
-                {/*<svg width="500" height="500" className='svg-con1'>*/}
-                    {/*<rect x="0" y="0" rx="30" ry="30" width="500" height="500" className='svg-inner1' />*/}
-                {/*</svg>*/}
 
                 <div className='shape red'/>
                 <div className='shape gray'/>
 
 
+                {/* Category Tabs */}
                 <div className='categories'>
 
                     <div className={(this.props.currentTab === consts.POSTS_TAB)? 'category-item selected': 'category-item'}
@@ -203,7 +163,12 @@ class Content extends Component {
                     {items}
                 </div>
 
-                <div className='break-line p-t-30 p-b-30'/>
+
+
+                <PageCounter/>
+
+
+                <div className='break-line p-b-30'/>
 
             </Element>
         );
@@ -224,4 +189,4 @@ const mapStateToProps = state => ({
     media: state.data.media,
 });
 
-export default connect(mapStateToProps, {handleModal, handleTab})(Content);
+export default connect(mapStateToProps, {handleModal, handleTab, handlePosts})(Content);

@@ -7,17 +7,24 @@ const initialState = {
     showModal: false,
     height: 0,
     width: 0,
+
+
+    grades: [],
+    fields: [],
+
     currentTab: consts.POSTS_TAB,
+
+    programPageNumber: 0,
+    postPageNumber: 0,
+    mediaPageNumber: 0,
 
     posts: [],
     postField: '',
     postGrade: '',
 
-    grades: [],
-    fields: [],
-
     programs: [],
-    media: [],
+    medias: [],
+
 };
 
 export default function (state = initialState, action) {
@@ -53,17 +60,29 @@ export default function (state = initialState, action) {
                 showModal: (action.payload === undefined || action.payload === '')? true: action.payload
             };
 
+        case types.HANDLE_POSTS:
 
-        case types.FETCH_PROGRAMS:
+            let listName;
+            let pageType;
+
+            if (action.type === consts.POST) {
+                listName = 'posts';
+                pageType = 'postPageNumber'
+
+            } else if (action.type === consts.PROGRAM) {
+                listName = 'programs';
+                pageType = 'programPageNumber'
+
+            } else if (action.type === consts.MEDIA) {
+                listName = 'medias';
+                pageType = 'mediaPageNumber'
+            }
 
             return {
-                ...state, // Rest Parameter
-                customers: action.payload.customers,
-                customerListVersion: action.payload.customerListVersion,
-                customerSort: action.customerSort,
-                customerStatus: action.customerStatus,
+                ...state,
+                [listName]: action.payload,
+                [pageType]: action.pageCount
             };
-
 
 
         default:

@@ -6,7 +6,7 @@ class Home extends Component {
     render() {
         return (
             <>
-
+w
                 <Content/>
 
                 <SchoolMembers/>
