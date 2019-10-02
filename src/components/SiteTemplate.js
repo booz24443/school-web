@@ -55,6 +55,7 @@ class SiteTemplate extends Component {
 
                 <Footer/>
 
+
             </div>
         );
     }

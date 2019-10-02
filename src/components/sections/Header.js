@@ -4,31 +4,51 @@ import {consts} from '../../config/config';
 import { NavLink } from 'react-router-dom';
 import {handleModal, handleTab} from "../../store/actions/mainActions";
 import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import LoginModal from "../modal/LoginModal";
 
 
 class Header extends Component {
 
 
+    constructor() {
+        super();
+
+        this.handleLogin = this.handleLogin.bind(this);
+
+    }
+
+
+    handleLogin() {
+        this.props.handleModal(consts.LOGIN_MODAL);
+    }
+
+
 
     render() {
 
-        /* کلاس ها کارنامه ها پیام ها پشتیبانی */
 
         let authBtn;
         let header;
 
         if (this.props.logged)
-            authBtn = <li>پروفایل</li>;
+            authBtn =
+                <>
+                    <li >پروفایل</li>
+                    <li >کلاس ها</li>
+                    <li >کارنامه ها</li>
+                    <li >پیام ها</li>
+                    <li >پشتیبانی</li>
+                </>;
 
         else
             authBtn =
                 <>
-                    <li>ورود</li>
-                    <li>ثبت نام</li>
+                    <li onClick={this.handleLogin}>ورود</li>
+                    <li onClick={this.handleLogin}>ثبت نام</li>
                 </>;
 
 
-        if (this.props.width < 901) {
+        if (this.props.width < 1200) {
 
             header = '';
 
@@ -55,7 +75,7 @@ class Header extends Component {
                                   hashSpy={true}
                                   duration={600}
                                   ignoreCancelEvents={false}
-                                  onClick={() => this.props.handleTab(consts.POSTS_TAB)}
+                                  onClick={() => this.props.handleTab(consts.POST)}
                             >
                                 اطلاعیه ها
                             </Link>
@@ -70,7 +90,7 @@ class Header extends Component {
                                   hashSpy={true}
                                   duration={600}
                                   ignoreCancelEvents={false}
-                                  onClick={() => this.props.handleTab(consts.PROGRAMS_TAB)}
+                                  onClick={() => this.props.handleTab(consts.PROGRAM)}
                             >
                                 برنامه ها
                             </Link>
@@ -84,7 +104,7 @@ class Header extends Component {
                                   hashSpy={true}
                                   duration={600}
                                   ignoreCancelEvents={false}
-                                  onClick={() => this.props.handleTab(consts.MEDIAS_TAB)}
+                                  onClick={() => this.props.handleTab(consts.MEDIA)}
                             >
                                 <NavLink to="/">
                                 رسانه ها
@@ -103,6 +123,8 @@ class Header extends Component {
 
         return (
             <div className='nav header'>
+
+                <LoginModal/>
 
                 {header}
 

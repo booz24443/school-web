@@ -2,11 +2,22 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-responsive-modal';
 
-import {showModal} from '../../store/actions/mainActions';
+import {handleModal} from '../../store/actions/mainActions';
 import ModalTemplate from "./ModalTemplate";
 
 class FilterModal extends Component {
 
+
+
+    componentDidMount() {
+
+        if (this.props.grades === [] && this.props.fields === []) { // if grades/fields was not fetched before
+
+            // TODO: fetch the shit
+
+        }
+
+    }
 
     render() {
         return (
@@ -32,6 +43,8 @@ class FilterModal extends Component {
 
 const mapStateToProps = state => ({
     showModal: state.data.showModal,
+    grades : state.data.grades,
+    fields: state.data.fields
 });
 
-export default connect(mapStateToProps, {showModal})(FilterModal);
+export default connect(mapStateToProps, {handleModal})(FilterModal);

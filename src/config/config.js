@@ -10,24 +10,20 @@ export const imagesAddress = '/images/';
 
 export const URLS = {
 
-    ROUTE_POST_LIST: baseAddress + '1/posts/html/10/0/null/null/null',
-
-    ROUTE_BASE_GET_POSTS: baseAddress + '1/posts/' + 'html/10/0/null/null/null',
 };
 
 export const consts = {
-    MEDIAS_TAB: 'mediaTab',
-    PROGRAMS_TAB: 'programsTab',
-    POSTS_TAB: 'postTab',
-
 
     PROGRAM_FILTER_MODAL: 'PROGRAM_FILTER_MODAL',
+    LOGIN_MODAL: 'LOGIN_MODAL',
 
     POST:'html',
     MEDIA:'media',
     PROGRAM:'program',
 
     CHUNK_COUNT: 10,
+
+    MOBILE_VIEW_WIDTH: 480,
 
 
     RESULT_CODE:'result_code',

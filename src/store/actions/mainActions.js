@@ -41,7 +41,9 @@ export const handlePageNumber = (pageType, number) => dispatch => {
 
 export const handlePosts = (type, chunkCount, pageCount) => dispatch => {
 
-    // getRequest(URLS.ROUTE_BASE_GET_POSTS + type + '/' + chunkCount + '/' + pageCount + '/null/null/null', (res) => {
+    /* TODO: run sever, test this shit */
+
+    // getRequest(baseAddress + '1/' + type + '/' + chunkCount + '/' + pageCount + '/null/null/null', (res) => {
     //
     //     if (res[consts.RESULT_CODE] === consts.SUCCESS_CODE) {
     //

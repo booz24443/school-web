@@ -9,7 +9,11 @@ import {consts, getRequest, log, postRequest, URLS} from "../../config/config";
 
 import {handleModal, handleTab, handlePosts} from '../../store/actions/mainActions';
 import PageCounter from "../PageCounter";
+import FilterModal from "../modal/FilterModal";
 
+/*
+* this component contains post lists
+* */
 class Content extends Component {
 
     constructor() {
@@ -32,21 +36,21 @@ class Content extends Component {
     handleTab(e) {
 
         if (this.postTab.contains(e.target)) {
-            this.props.handleTab(consts.POSTS_TAB); // handle tab and fetchContent seprately
+            this.props.handleTab(consts.POST); // handle tab and fetchContent seprately
             this.props.handlePosts(consts.POST, consts.CHUNK_COUNT, 0);
 
         } else if (this.programTab.contains(e.target)) {
-            this.props.handleTab(consts.PROGRAMS_TAB);
+            this.props.handleTab(consts.PROGRAM);
             this.props.handlePosts(consts.PROGRAM, consts.CHUNK_COUNT, 0);
 
         } else if (this.mediaTab.contains(e.target)) {
-            this.props.handleTab(consts.MEDIAS_TAB);
+            this.props.handleTab(consts.MEDIA);
             this.props.handlePosts(consts.MEDIA, consts.CHUNK_COUNT, 0);
         }
     }
 
     handleProgramFilter() {
-        this.props.showModal(consts.PROGRAM_FILTER_MODAL);
+        this.props.handleModal(consts.PROGRAM_FILTER_MODAL);
     }
 
     render() {
@@ -54,7 +58,7 @@ class Content extends Component {
         let filter;
         let items;
 
-        if (this.props.currentTab === consts.POSTS_TAB) {
+        if (this.props.currentTab === consts.POST) {
             items = this.props.posts.map(post =>
                     <div className='item'>
 
@@ -66,7 +70,7 @@ class Content extends Component {
                     </div>
                 )
 
-        } else if (this.props.currentTab  === consts.PROGRAMS_TAB) {
+        } else if (this.props.currentTab  === consts.PROGRAM) {
 
             items =
                 <>
@@ -89,6 +93,7 @@ class Content extends Component {
             filter =
                 <div className='filter-con dis-flex'>
 
+                    <FilterModal /> {/* modal is completely handled by redux */}
 
                     <div className='filter dis-flex  m-l-15'>
                         <div className='type'>پایه : </div>
@@ -108,7 +113,7 @@ class Content extends Component {
 
                 </div>
 
-        } else if (this.props.currentTab  === consts.MEDIAS_TAB) {
+        } else if (this.props.currentTab  === consts.MEDIA) {
 
             items =
                 <>
@@ -142,13 +147,13 @@ class Content extends Component {
                 {/* Category Tabs */}
                 <div className='categories'>
 
-                    <div className={(this.props.currentTab === consts.POSTS_TAB)? 'category-item selected': 'category-item'}
+                    <div className={(this.props.currentTab === consts.POST)? 'category-item selected': 'category-item'}
                          ref={node =>  this.postTab=node} onClick={this.handleTab}>اطلاعیه ها</div>
 
-                    <div className={(this.props.currentTab === consts.PROGRAMS_TAB)? 'category-item selected': 'category-item'}
+                    <div className={(this.props.currentTab === consts.PROGRAM)? 'category-item selected': 'category-item'}
                          ref={node =>  this.programTab=node} onClick={this.handleTab}>برنامه ها</div>
 
-                    <div className={(this.props.currentTab === consts.MEDIAS_TAB)? 'category-item selected': 'category-item'}
+                    <div className={(this.props.currentTab === consts.MEDIA)? 'category-item selected': 'category-item'}
                          ref={node =>  this.mediaTab=node} onClick={this.handleTab}>رسانه ها</div>
 
                 </div>

@@ -489,6 +489,7 @@ div {
   margin: 10px 10px;
   border-radius: 26px;
   cursor: pointer;
+  font-size: 15px;
 }
 .nav li:hover {
   background: #d66763;

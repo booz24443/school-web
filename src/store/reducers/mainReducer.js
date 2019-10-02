@@ -12,7 +12,7 @@ const initialState = {
     grades: [],
     fields: [],
 
-    currentTab: consts.POSTS_TAB,
+    currentTab: consts.POST,
 
     programPageNumber: 0,
     postPageNumber: 0,
